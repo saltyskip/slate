@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>NEO DAPI Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -211,9 +211,6 @@
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
               <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
@@ -225,19 +222,44 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#read-methods" class="toc-h1 toc-link" data-title="Read Methods">Read Methods</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#getprovider" class="toc-h2 toc-link" data-title="getProvider">getProvider</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#getnetworks" class="toc-h2 toc-link" data-title="getNetworks">getNetworks</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#getaccount" class="toc-h2 toc-link" data-title="getAccount">getAccount</a>
+                  </li>
+                  <li>
+                    <a href="#getbalance" class="toc-h2 toc-link" data-title="getBalance">getBalance</a>
+                  </li>
+                  <li>
+                    <a href="#getstorage" class="toc-h2 toc-link" data-title="getStorage">getStorage</a>
+                  </li>
+                  <li>
+                    <a href="#invokeread" class="toc-h2 toc-link" data-title="invokeRead">invokeRead</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#write-methods" class="toc-h1 toc-link" data-title="Write Methods">Write Methods</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#send" class="toc-h2 toc-link" data-title="send">send</a>
+                  </li>
+                  <li>
+                    <a href="#invoke" class="toc-h2 toc-link" data-title="invoke">invoke</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#events" class="toc-h1 toc-link" data-title="Events">Events</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#event-changed" class="toc-h2 toc-link" data-title="Event Changed">Event Changed</a>
                   </li>
               </ul>
           </li>
@@ -254,185 +276,346 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the NEO dAPI. This allows your decentralized application to connect to any NEO wallet which conforms to the dAPI standard. You no longer have to spend any time building out your own wallet, and can instead focus on making your application great.</p>
+<h1 id='read-methods'>Read Methods</h1>
+<p>Read methods do not alter the state of the blockchain. It can help you query information about your user, and provide you with relevant information:</p>
+<h2 id='getprovider'>getProvider</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getProvider</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">provider</span><span class="p">:</span> <span class="nx">Provider</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="p">,</span>
+    <span class="nx">website</span><span class="p">,</span>
+    <span class="nx">version</span><span class="p">,</span>
+    <span class="nx">compatibility</span><span class="p">,</span>
+  <span class="p">}</span> <span class="o">=</span> <span class="nx">provider</span><span class="p">;</span>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Provider name: '</span> <span class="o">+</span> <span class="nx">name</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Provider website: '</span> <span class="o">+</span> <span class="nx">website</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Provider dAPI version: '</span> <span class="o">+</span> <span class="nx">version</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Provider dAPI compatibility: '</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">compatibility</span><span class="p">));</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="na">err</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">NO_PROVIDER</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'No provider available.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CONNECTION_DENIED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The user rejected the request to connect with your dApp.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
 </code></pre>
 <blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>The compatibility field will return a list of strings that corresponds to NEPs that the dAPI conforms to</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"O3"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">"o3.network"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"compatibility"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"NEP-1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"NEP-2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"NEP-3"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+<p>Returns information about the dAPI provider, including who this provider is, the version of their dAPI, and the NEP that the interface is compatible with.</p>
+<h2 id='getnetworks'>getNetworks</h2>
+<p>Returns the networks that the wallet provider has available to connect to.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">getNetworks</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">networks</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">networks</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Networks: '</span> <span class="o">+</span> <span class="nx">networks</span><span class="p">);</span>
+  <span class="c1">// eg. ["MainNet", "TestNet", "PrivateNet"]</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="na">err</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">NO_PROVIDER</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'No provider available.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CONNECTION_DENIED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The user rejected the request to connect with your dApp'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"networks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"MainNet"</span><span class="p">,</span><span class="w"> </span><span class="s2">"TestNet"</span><span class="p">,</span><span class="w"> </span><span class="s2">"PrivateNet"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='getaccount'>getAccount</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getAccount</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">account</span><span class="p">:</span> <span class="nx">Account</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">{</span>
+    <span class="nx">address</span><span class="p">,</span>
+    <span class="nx">publicKey</span><span class="p">,</span>
+  <span class="p">}</span> <span class="o">=</span> <span class="nx">account</span><span class="p">;</span>
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Provider address: '</span> <span class="o">+</span> <span class="nx">address</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Provider public key: '</span> <span class="o">+</span> <span class="nx">publicKey</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="na">err</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">NO_PROVIDER</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'No provider available.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CONNECTION_DENIED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The user rejected the request to connect with your dApp'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">address</span><span class="p">:</span><span class="w"> </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">,</span><span class="w">
+  </span><span class="err">publicKey</span><span class="p">:</span><span class="w"> </span><span class="s2">"03d43468721ef8936548878071b534d8228c313e02e6d90cef8c65fd3c2d4eaeed"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='getbalance'>getBalance</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getBalance</span><span class="p">({</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">address</span><span class="p">:</span> <span class="s1">'AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru'</span><span class="p">,</span>
+    <span class="na">assets</span><span class="p">:</span> <span class="p">[</span><span class="s1">'NKN'</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="na">network</span><span class="p">:</span> <span class="s1">'MainNet'</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">results</span><span class="p">:</span> <span class="nx">BalanceResults</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">results</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">address</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="p">{</span> <span class="nx">balances</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">results</span><span class="p">[</span><span class="nx">address</span><span class="p">];</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">balances</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">balance</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="p">{</span> <span class="nx">scriptHash</span><span class="p">,</span> <span class="nx">symbol</span><span class="p">,</span> <span class="nx">amount</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">balance</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Address: '</span> <span class="o">+</span> <span class="nx">address</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Asset scriptHash: '</span> <span class="o">+</span> <span class="nx">scriptHash</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Asset symbol: '</span> <span class="o">+</span> <span class="nx">symbol</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Amount: '</span> <span class="o">+</span> <span class="nx">amount</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="na">err</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">NO_PROVIDER</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'No provider available.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CONNECTION_DENIED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The user rejected the request to connect with your dApp'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 </code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
+<p>Single Address with specific balances requested</p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
+  </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c36aee199dbba6c3f439983657558cfb67629599"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NKN"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00000233"</span><span class="p">,</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
-</tr>
-</tbody></table>
-<h1 id='errors'>Errors</h1>
+<p>Single Address with all balances requested</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEO"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GAS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"777.0001"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c36aee199dbba6c3f439983657558cfb67629599"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NKN"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00000233"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc732edee1efdf968c23c20a9628eaa5a6ccb934"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NNC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Multiple address balance queries</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEO"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GAS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"777.0001"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c36aee199dbba6c3f439983657558cfb67629599"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NKN"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00000233"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc732edee1efdf968c23c20a9628eaa5a6ccb934"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NNC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"AbKNY45nRDy6B65YPVz1B6YXiTnzRqU2uQ"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1578103c13e39df15d0d29826d957e85d770d8c9"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PHX"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11000"</span><span class="p">,</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='getstorage'>getStorage</h2>
+<p>Returns the raw value located in contract storage</p>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">getStorage</span><span class="p">({</span>
+  <span class="na">scriptHash</span><span class="p">:</span> <span class="s1">'505663a29d83663a838eee091249abd167e928f5'</span><span class="p">,</span>
+  <span class="na">key</span><span class="p">:</span> <span class="s1">'game.status'</span><span class="p">,</span>
+  <span class="na">network</span><span class="p">:</span> <span class="s1">'TestNet'</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Storage value: '</span> <span class="o">+</span> <span class="nx">value</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="na">err</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">NO_PROVIDER</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'No provider available.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CONNECTION_REFUSED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Connection dApp not connected. Please call the "connect" function.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">RPC_ERROR</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'There was an error when broadcasting this transaction to the network.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello world"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='invokeread'>invokeRead</h2>
+<p>Execute a contract invocation in read-only mode.
+<code>javascript
+invokeRead({
+  scriptHash: &#39;505663a29d83663a838eee091249abd167e928f5&#39;,
+  operation: &#39;calculatorAdd&#39;,
+  arguments: [
+    {
+      type: &#39;integer&#39;,
+      value: 2
+    },
+    {
+      type: &#39;integer&#39;,
+      value: 10
+    }
+  ],
+  network: &#39;PrivNet&#39;
+})
+.then((result: Object) =&gt; {
+  console.log(&#39;Read invocation result: &#39; + JSON.stringigy(result));
+})
+.catch((err: string) =&gt; {
+  switch(err) {
+    case NO_PROVIDER:
+      console.log(&#39;No provider available.&#39;);
+      break;
+    case CONNECTION_REFUSED:
+      console.log(&#39;Connection dApp not connected. Please call the &quot;connect&quot; function.&#39;);
+      break;
+   case RPC_ERROR:
+    console.log(&#39;There was an error when broadcasting this transaction to the network.&#39;);
+    break;
+  }
+});
+</code></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">script</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">8</span><span class="err">h</span><span class="mi">89</span><span class="err">fh</span><span class="mi">398</span><span class="err">f</span><span class="mi">42</span><span class="err">f.....</span><span class="mi">89</span><span class="err">hf</span><span class="mi">2894</span><span class="err">hf</span><span class="mi">9834</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="err">state</span><span class="p">:</span><span class="w"> </span><span class="err">'HALT</span><span class="p">,</span><span class="w"> </span><span class="err">BREAK'</span><span class="p">,</span><span class="w">
+  </span><span class="err">gas_consumed</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mf">0.13</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="err">stack</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="err">type</span><span class="p">:</span><span class="w"> </span><span class="err">'Integer'</span><span class="p">,</span><span class="w">
+      </span><span class="err">value</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">1337</span><span class="err">'</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h1 id='write-methods'>Write Methods</h1>
+<p>Write methods will alter the state on the blockchain on behalf of the user</p>
+<h2 id='send'>send</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">send</span><span class="p">({</span>
+  <span class="na">fromAddress</span><span class="p">:</span> <span class="s1">'ATaWxfUAiBcQixNPq6TvKHEHPQum9bx79d'</span><span class="p">,</span>
+  <span class="na">toAddress</span><span class="p">:</span> <span class="s1">'ATaWxfUAiBcQixNPq6TvKHEHPQum9bx79d'</span><span class="p">,</span>
+  <span class="na">asset</span><span class="p">:</span> <span class="s1">'GAS'</span><span class="p">,</span>
+  <span class="na">amount</span><span class="p">:</span> <span class="s1">'0.0001'</span><span class="p">,</span>
+  <span class="na">remark</span><span class="p">:</span> <span class="s1">'Hash puppy clothing purchase. Invoice#abc123'</span><span class="p">,</span>
+  <span class="na">fee</span><span class="p">:</span> <span class="s1">'0.0001'</span><span class="p">,</span>
+  <span class="na">network</span><span class="p">:</span> <span class="s1">'MainNet'</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(({</span><span class="nx">txid</span><span class="p">,</span> <span class="nx">nodeUrl</span><span class="p">}:</span> <span class="nx">SendOutput</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Send transaction success!'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Transaction ID: '</span> <span class="o">+</span> <span class="nx">txid</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'RPC node URL: '</span> <span class="o">+</span> <span class="nx">nodeUrl</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="na">err</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">NO_PROVIDER</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'No provider available.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CONNECTION_REFUSED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'dApp not connected. Please call the "connect" function.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">SEND_ERROR</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'There was an error when broadcasting this transaction to the network.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">MALFORMED_ADDRESS</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The receiver address provided is not valid.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CANCELED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The user has canceled this transaction.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">INSUFFICIENT_FUNDS</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The user has insufficient funds to execute this transaction.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">txid</span><span class="p">:</span><span class="w"> </span><span class="err">'ed</span><span class="mi">54</span><span class="err">fb</span><span class="mi">38</span><span class="err">dff</span><span class="mi">371</span><span class="err">be</span><span class="mi">6</span><span class="err">e</span><span class="mi">3</span><span class="err">f</span><span class="mi">96</span><span class="err">e</span><span class="mi">4880405758</span><span class="err">c</span><span class="mi">07</span><span class="err">fe</span><span class="mi">6</span><span class="err">dd</span><span class="mi">1295</span><span class="err">eb</span><span class="mi">136</span><span class="err">fe</span><span class="mi">15</span><span class="err">f</span><span class="mi">311</span><span class="err">e</span><span class="mi">9</span><span class="err">ff</span><span class="mi">77</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="err">nodeUrl</span><span class="p">:</span><span class="w"> </span><span class="err">'http</span><span class="p">:</span><span class="err">//seed</span><span class="mi">7</span><span class="err">.ngd.network</span><span class="p">:</span><span class="mi">10332</span><span class="err">'</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='invoke'>invoke</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">invoke</span><span class="p">({</span>
+  <span class="na">scriptHash</span><span class="p">:</span> <span class="s1">'505663a29d83663a838eee091249abd167e928f5'</span><span class="p">,</span>
+  <span class="na">operation</span><span class="p">:</span> <span class="s1">'storeData'</span><span class="p">,</span>
+  <span class="na">arguments</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+      <span class="na">value</span><span class="p">:</span> <span class="s1">'hello'</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="na">assets</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">NEO</span><span class="p">:</span> <span class="s1">'100'</span><span class="p">,</span>
+    <span class="na">GAS</span><span class="p">:</span> <span class="s1">'0.0001'</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="na">fee</span><span class="p">:</span> <span class="s1">'0.001'</span><span class="p">,</span>
+  <span class="na">network</span><span class="p">:</span> <span class="s1">'TestNet'</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(({</span><span class="nx">txid</span><span class="p">,</span> <span class="nx">nodeUrl</span><span class="p">}:</span> <span class="nx">InvokeOutput</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Invoke transaction success!'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Transaction ID: '</span> <span class="o">+</span> <span class="nx">txid</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'RPC node URL: '</span> <span class="o">+</span> <span class="nx">nodeUrl</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="na">err</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">NO_PROVIDER</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'No provider available.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CONNECTION_REFUSED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Connection dApp not connected. Please call the "connect" function.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">RPC_ERROR</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'There was an error when broadcasting this transaction to the network.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CANCELED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'The user has canceled this transaction.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">txid</span><span class="p">:</span><span class="w"> </span><span class="err">'ed</span><span class="mi">54</span><span class="err">fb</span><span class="mi">38</span><span class="err">dff</span><span class="mi">371</span><span class="err">be</span><span class="mi">6</span><span class="err">e</span><span class="mi">3</span><span class="err">f</span><span class="mi">96</span><span class="err">e</span><span class="mi">4880405758</span><span class="err">c</span><span class="mi">07</span><span class="err">fe</span><span class="mi">6</span><span class="err">dd</span><span class="mi">1295</span><span class="err">eb</span><span class="mi">136</span><span class="err">fe</span><span class="mi">15</span><span class="err">f</span><span class="mi">311</span><span class="err">e</span><span class="mi">9</span><span class="err">ff</span><span class="mi">77</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="err">nodeUrl</span><span class="p">:</span><span class="w"> </span><span class="err">'http</span><span class="p">:</span><span class="err">//seed</span><span class="mi">7</span><span class="err">.ngd.network</span><span class="p">:</span><span class="mi">10332</span><span class="err">'</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h1 id='events'>Events</h1><h2 id='event-changed'>Event Changed</h2><h1 id='errors'>Errors</h1>
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
 </aside>
@@ -494,9 +677,6 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
                 <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
