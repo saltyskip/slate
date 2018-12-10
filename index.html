@@ -304,7 +304,7 @@
   <span class="p">}</span>
 </code></pre>
 <blockquote>
-<p>The compatibility field will return a list of strings that corresponds to NEPs that the dAPI conforms to</p>
+<p>Example Response</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"O3"</span><span class="p">,</span><span class="w">
@@ -314,9 +314,36 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Returns information about the dAPI provider, including who this provider is, the version of their dAPI, and the NEP that the interface is compatible with.</p>
-<h2 id='getnetworks'>getNetworks</h2>
-<p>Returns the networks that the wallet provider has available to connect to.</p>
-<pre class="highlight javascript tab-javascript"><code><span class="nx">getNetworks</span><span class="p">()</span>
+<h3 id='provider-response'>Provider Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>The name of the wallet provider</td>
+</tr>
+<tr>
+<td>website</td>
+<td>String</td>
+<td>The website of the wallet provider</td>
+</tr>
+<tr>
+<td>version</td>
+<td>String</td>
+<td>The version of the dAPI that the the wallet supports</td>
+</tr>
+<tr>
+<td>compatibility</td>
+<td>[String]</td>
+<td>A list of all applicable NEPs which the wallet provider supports</td>
+</tr>
+</tbody></table>
+<h2 id='getnetworks'>getNetworks</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getNetworks</span><span class="p">()</span>
 <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">networks</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">networks</span><span class="p">;</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Networks: '</span> <span class="o">+</span> <span class="nx">networks</span><span class="p">);</span>
@@ -332,10 +359,32 @@
       <span class="k">break</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">});</span>
-</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"networks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"MainNet"</span><span class="p">,</span><span class="w"> </span><span class="s2">"TestNet"</span><span class="p">,</span><span class="w"> </span><span class="s2">"PrivateNet"</span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='getaccount'>getAccount</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getAccount</span><span class="p">()</span>
+</code></pre>
+<blockquote>
+<p>Example Response
+<code>json
+{
+  &quot;networks&quot;: [&quot;MainNet&quot;, &quot;TestNet&quot;, &quot;PrivateNet&quot;]
+}
+</code></p>
+</blockquote>
+
+<p>Returns the networks that the wallet provider has available to connect to.</p>
+<h3 id='networks-response'>Networks Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>networks</td>
+<td>[String]</td>
+<td>A list of all networks which this wallet will allow access to</td>
+</tr>
+</tbody></table>
+<h2 id='getaccount'>getAccount</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getAccount</span><span class="p">()</span>
 <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">account</span><span class="p">:</span> <span class="nx">Account</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="p">{</span>
     <span class="nx">address</span><span class="p">,</span>
@@ -355,11 +404,36 @@
       <span class="k">break</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">});</span>
-</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="err">address</span><span class="p">:</span><span class="w"> </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">,</span><span class="w">
-  </span><span class="err">publicKey</span><span class="p">:</span><span class="w"> </span><span class="s2">"03d43468721ef8936548878071b534d8228c313e02e6d90cef8c65fd3c2d4eaeed"</span><span class="w">
+</code></pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"publicKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"03d43468721ef8936548878071b534d8228c313e02e6d90cef8c65fd3c2d4eaeed"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='getbalance'>getBalance</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getBalance</span><span class="p">({</span>
+</span></code></pre>
+<p>Return the Account that is currently connected to the dApp.</p>
+<h3 id='account-response'>Account Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>String</td>
+<td>The address of the account that is currently connected to the dapp</td>
+</tr>
+<tr>
+<td>publicKey</td>
+<td>String</td>
+<td>The public key of the account that is currently connected to the dapp</td>
+</tr>
+</tbody></table>
+<h2 id='getbalance'>getBalance</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getBalance</span><span class="p">({</span>
   <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">address</span><span class="p">:</span> <span class="s1">'AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru'</span><span class="p">,</span>
     <span class="na">assets</span><span class="p">:</span> <span class="p">[</span><span class="s1">'NKN'</span><span class="p">]</span>
@@ -390,8 +464,20 @@
   <span class="p">}</span>
 <span class="p">});</span>
 </code></pre>
+<blockquote>
 <p>Single Address with specific balances requested</p>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">//input</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"NKN"</span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainNet"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">//output</span><span class="w">
+</span><span class="p">{</span><span class="w">
   </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c36aee199dbba6c3f439983657558cfb67629599"</span><span class="p">,</span><span class="w">
@@ -401,8 +487,19 @@
   </span><span class="p">],</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<blockquote>
 <p>Single Address with all balances requested</p>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="err">Input</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">,</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainNet"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="err">Output</span><span class="w">
+</span><span class="p">{</span><span class="w">
   </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b"</span><span class="p">,</span><span class="w">
@@ -427,8 +524,25 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<blockquote>
 <p>Multiple address balance queries</p>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="err">Input</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AbKNY45nRDy6B65YPVz1B6YXiTnzRqU2uQ"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"PHX"</span><span class="p">],</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainNet"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="err">Output</span><span class="w">
+</span><span class="p">{</span><span class="w">
   </span><span class="s2">"AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"scriptHash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9"</span><span class="p">,</span><span class="w">
@@ -459,7 +573,143 @@
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='getstorage'>getStorage</h2>
+</span></code></pre>
+<p>Allows the DAPP to query the balance of a user, this includes both native assets (NEO/GAS) and NEP-5 tokens</p>
+<h3 id='request-parameters'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>params</td>
+<td>[BalanceRequest]</td>
+<td>A list of Balance Request Objects, specifying which addresses, and which assets to query</td>
+</tr>
+<tr>
+<td>network</td>
+<td>String</td>
+<td>The call will only work for the networks available in the GetNetworks command</td>
+</tr>
+<tr>
+<td>fetchUTXO?</td>
+<td>boolean</td>
+<td>The response will fetch NEO and GAS UTXO&#39;s if this attribute is true</td>
+</tr>
+</tbody></table>
+<h3 id='balance-request'>Balance Request</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>String</td>
+<td>The address whose balance you want to query</td>
+</tr>
+<tr>
+<td>assets</td>
+<td>[String]</td>
+<td>A list of symbols to query the balance for</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address_1</td>
+<td>[BalanceResponse]</td>
+<td>This key is the actual address of the query eg. &quot;AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru&quot;</td>
+</tr>
+<tr>
+<td>address_2</td>
+<td>[BalanceResponse]</td>
+<td>This key is the actual address of the query eg. &quot;AbKNY45nRDy6B65YPVz1B6YXiTnzRqU2uQ&quot;</td>
+</tr>
+<tr>
+<td>address_n</td>
+<td>[BalanceResponse]</td>
+<td>This key is the actual address of the query eg. &quot;AUdawyrLMskxXMUE8osX9mSLKz8R7777kE&quot;</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+The amount of addresses is n where n is the number of addresses specified in your query
+</aside>
+<h3 id='balanceresponse'>BalanceResponse</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>scriptHash</td>
+<td>String</td>
+<td>Script hash of the given asset</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>String</td>
+<td>Symbol of the given asset</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>String</td>
+<td>Double Value of the balance represented as a String</td>
+</tr>
+<tr>
+<td>unspent</td>
+<td>[UTXO]</td>
+<td>If fetch utxo&#39;s was turned on then the utxo array will be returned for the native assets NEO and GAS</td>
+</tr>
+</tbody></table>
+<h3 id='utxo'>UTXO</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>asset</td>
+<td>String</td>
+<td>Script hash of the native asset</td>
+</tr>
+<tr>
+<td>createdAtBlock</td>
+<td>String</td>
+<td>Block number where this utxo was created</td>
+</tr>
+<tr>
+<td>index</td>
+<td>Int</td>
+<td>???</td>
+</tr>
+<tr>
+<td>txid</td>
+<td>String</td>
+<td>The transaction id of this UTXO</td>
+</tr>
+<tr>
+<td>value</td>
+<td>String</td>
+<td>The double value of this UTXO represented as a String</td>
+</tr>
+</tbody></table>
+<h2 id='getstorage'>getStorage</h2>
 <p>Returns the raw value located in contract storage</p>
 <pre class="highlight javascript tab-javascript"><code><span class="nx">getStorage</span><span class="p">({</span>
   <span class="na">scriptHash</span><span class="p">:</span> <span class="s1">'505663a29d83663a838eee091249abd167e928f5'</span><span class="p">,</span>
