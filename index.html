@@ -220,6 +220,17 @@
       <ul id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#dapi-for-end-users" class="toc-h2 toc-link" data-title="DAPI for End Users">DAPI for End Users</a>
+                  </li>
+                  <li>
+                    <a href="#dapi-for-dapp-developers" class="toc-h2 toc-link" data-title="DAPI for dApp Developers">DAPI for dApp Developers</a>
+                  </li>
+                  <li>
+                    <a href="#dapi-for-wallet-providers" class="toc-h2 toc-link" data-title="DAPI for Wallet Providers">DAPI for Wallet Providers</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#read-methods" class="toc-h1 toc-link" data-title="Read Methods">Read Methods</a>
@@ -276,7 +287,15 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the NEO dAPI. This allows your decentralized application to connect to any NEO wallet which conforms to the dAPI standard. You no longer have to spend any time building out your own wallet, and can instead focus on making your application great.</p>
+<p>Welcome to the NEO dAPI. This allows your decentralized application to connect to any NEO wallet which conforms to the dAPI standard. You no longer have to spend any time building out your own wallet, and can instead focus on making your application great. If you&#39;d like to learn more about the use cases of this dAPI, please read below. Otherwise, feel free to skip directly to the method implementation starting with Read Methods.</p>
+<h2 id='dapi-for-end-users'>DAPI for End Users</h2>
+<p>As dApps come into the ecosystem, there will be more concerns about the safety of user assets. If dApps all required users to input their private keys in order to use them, it just takes one malicious dApp to steal all their funds. By using a trusted wallet provider which interfaces with the various dApps in the ecosystem on their behalf, users can reduce the exposure of their private keys. This will even allow users to transact with their hardware wallets via the wallet provider, never having to reveal their private keys even to the wallet itself.</p>
+<h2 id='dapi-for-dapp-developers'>DAPI for dApp Developers</h2>
+<p>One of the initial hurtles for any developer when starting to develop a dApp is to create a wallet module that will allow the user and application to interface with the NEO blockchain. While there are many quality SDKs out there such as neon-js for facilitating the communication of these requests, there are often many hurtles to successfully constructing the right combination of methods, along with input and output parsing. The issue only gets amplified when trying to integrate with hardware wallet providers such as a Ledger device.</p>
+
+<p>While there may be several options for 3rd party wallet providers that will help them to facilitate these transactions, the is currently no common consensus on the consistency of their interfaces. With a lack of consistency in interfaces to use these wallet provider services, dApp developers will be forced to make a decision to have their platform supported by a single provider, or to double or even triple their development efforts to accommodate all the different wallet provider interfaces. This will lead to a fragmentation in the dApps ecosystem.</p>
+<h2 id='dapi-for-wallet-providers'>DAPI for Wallet Providers</h2>
+<p>Each wallet provider, when deciding on supporting dApps to utilize their services as an authentication mechanism will be faced with a decision on how to implement an API to communicate with the dApps. Wallet providers can choose to create their own API from scratch, create their own version of existing projects, or aim to directly duplication an existing API. In the case that the provider decides to make their own API interface from scratch, and try to promote dApps to use it, time and effort will inevitably be wasted by both the provider and competing providers on getting dApp developers on board with using their custom communication interface. If we have a unified interface for such transactions, providers can spend more time on making their individual services better for their users.</p>
 <h1 id='read-methods'>Read Methods</h1>
 <p>Read methods do not alter the state of the blockchain. It can help you query information about your user, and provide you with relevant information:</p>
 <h2 id='getprovider'>getProvider</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getProvider</span><span class="p">()</span>
@@ -709,9 +728,7 @@ The amount of addresses is n where n is the number of addresses specified in you
 <td>The double value of this UTXO represented as a String</td>
 </tr>
 </tbody></table>
-<h2 id='getstorage'>getStorage</h2>
-<p>Returns the raw value located in contract storage</p>
-<pre class="highlight javascript tab-javascript"><code><span class="nx">getStorage</span><span class="p">({</span>
+<h2 id='getstorage'>getStorage</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">getStorage</span><span class="p">({</span>
   <span class="na">scriptHash</span><span class="p">:</span> <span class="s1">'505663a29d83663a838eee091249abd167e928f5'</span><span class="p">,</span>
   <span class="na">key</span><span class="p">:</span> <span class="s1">'game.status'</span><span class="p">,</span>
   <span class="na">network</span><span class="p">:</span> <span class="s1">'TestNet'</span>
@@ -733,10 +750,54 @@ The amount of addresses is n where n is the number of addresses specified in you
       <span class="k">break</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">});</span>
-</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</code></pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello world"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='invokeread'>invokeRead</h2>
+</span></code></pre>
+<p>Returns the raw value located in contract storage</p>
+<h3 id='get-storage-request'>Get Storage Request</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>scriptHash</td>
+<td>String</td>
+<td>Scripthash of the contract whose storage you are querying on</td>
+</tr>
+<tr>
+<td>key</td>
+<td>String</td>
+<td>Key of the storage value to retrieve from the contract</td>
+</tr>
+<tr>
+<td>network</td>
+<td>String?</td>
+<td>Network alias to submit this request to. If omitted, will default to &quot;MainNet&quot;.</td>
+</tr>
+</tbody></table>
+<h3 id='get-storage-response'>Get Storage Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result</td>
+<td>String</td>
+<td>The raw value located in contract storage</td>
+</tr>
+</tbody></table>
+<h2 id='invokeread'>invokeRead</h2>
 <p>Execute a contract invocation in read-only mode.
 <code>javascript
 invokeRead({
@@ -866,61 +927,37 @@ invokeRead({
   </span><span class="err">nodeUrl</span><span class="p">:</span><span class="w"> </span><span class="err">'http</span><span class="p">:</span><span class="err">//seed</span><span class="mi">7</span><span class="err">.ngd.network</span><span class="p">:</span><span class="mi">10332</span><span class="err">'</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h1 id='events'>Events</h1><h2 id='event-changed'>Event Changed</h2><h1 id='errors'>Errors</h1>
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
-
-<p>The Kittn API uses the following error codes:</p>
+<p>The NEO dAPI will provide these basic errors. It is up to the wallet provider to provide additional information if they choose:</p>
 
 <table><thead>
 <tr>
-<th>Error Code</th>
+<th>Error Type</th>
 <th>Meaning</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>400</td>
-<td>Bad Request -- Your request is invalid.</td>
+<td>NO_PROVIDER</td>
+<td>Could not find an instance of the dAPI in the webpage</td>
 </tr>
 <tr>
-<td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
+<td>CONNECTION_REFUSED</td>
+<td>The dAPI provider refused to process this request</td>
 </tr>
 <tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+<td>RPC_ERROR</td>
+<td>An RPC error occured when submitting the request</td>
 </tr>
 <tr>
-<td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
+<td>SEND_ERROR</td>
+<td>An error occured while attempting to send</td>
 </tr>
 <tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+<td>MALFORMED_ADDRESS</td>
+<td>An input address was invalid</td>
 </tr>
 <tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+<td>CANCELED</td>
+<td>The user chose to cancel the action</td>
 </tr>
 </tbody></table>
 
