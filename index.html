@@ -270,7 +270,10 @@
             <a href="#events" class="toc-h1 toc-link" data-title="Events">Events</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#event-changed" class="toc-h2 toc-link" data-title="Event Changed">Event Changed</a>
+                    <a href="#ready" class="toc-h2 toc-link" data-title="READY">READY</a>
+                  </li>
+                  <li>
+                    <a href="#account_changed" class="toc-h2 toc-link" data-title="ACCOUNT_CHANGED">ACCOUNT_CHANGED</a>
                   </li>
               </ul>
           </li>
@@ -881,11 +884,84 @@ invokeRead({
       <span class="k">break</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">});</span>
-</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</code></pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="err">txid</span><span class="p">:</span><span class="w"> </span><span class="err">'ed</span><span class="mi">54</span><span class="err">fb</span><span class="mi">38</span><span class="err">dff</span><span class="mi">371</span><span class="err">be</span><span class="mi">6</span><span class="err">e</span><span class="mi">3</span><span class="err">f</span><span class="mi">96</span><span class="err">e</span><span class="mi">4880405758</span><span class="err">c</span><span class="mi">07</span><span class="err">fe</span><span class="mi">6</span><span class="err">dd</span><span class="mi">1295</span><span class="err">eb</span><span class="mi">136</span><span class="err">fe</span><span class="mi">15</span><span class="err">f</span><span class="mi">311</span><span class="err">e</span><span class="mi">9</span><span class="err">ff</span><span class="mi">77</span><span class="err">'</span><span class="p">,</span><span class="w">
   </span><span class="err">nodeUrl</span><span class="p">:</span><span class="w"> </span><span class="err">'http</span><span class="p">:</span><span class="err">//seed</span><span class="mi">7</span><span class="err">.ngd.network</span><span class="p">:</span><span class="mi">10332</span><span class="err">'</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='invoke'>invoke</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">invoke</span><span class="p">({</span>
+</span></code></pre>
+<p>The send API can be used for accepting payments from the user in a cryptocurrency that is located on the NEO blockchain. It requires user authentication in order for the transaction to be relayed. The transaction will be relayed by the wallet.</p>
+<h3 id='send-request'>Send Request</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fromAddress</td>
+<td>String</td>
+<td>The address from where the transaction is being sent. This will be the same value as the one received from the getAccount API</td>
+</tr>
+<tr>
+<td>toAddress</td>
+<td>String</td>
+<td>The address to where the user should send their funds</td>
+</tr>
+<tr>
+<td>asset</td>
+<td>String</td>
+<td>The asset which is being requested for payment...e.g GAS or CGAS</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>String</td>
+<td>The amount which is being requested for payment</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>String?</td>
+<td>A transaction attribute remark which may be placed in the transaction, this data will appear in the transaction record on the blockchain</td>
+</tr>
+<tr>
+<td>fee</td>
+<td>String?</td>
+<td>If a fee is specified then the wallet SHOULD NOT override it, if a fee is not specified the wallet SHOULD allow the user to attach an optional fee</td>
+</tr>
+<tr>
+<td>network</td>
+<td>String?</td>
+<td>Network alias to submit this request to. If omitted, will default to &quot;MainNet&quot;.</td>
+</tr>
+</tbody></table>
+<h3 id='send-response'>Send Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>txid</td>
+<td>String</td>
+<td>The transaction id of the send request which can be queried on the blockchain</td>
+</tr>
+<tr>
+<td>nodeURL</td>
+<td>String</td>
+<td>The node to which the transaction was submitted to</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+It is reccommended that the DAPP take appropriate levels of risk prevention when accepting transactions. The dapp can query the mempool of a known node to ensure that the transaction will indeed be broadcast on the network.
+</aside>
+<h2 id='invoke'>invoke</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">invoke</span><span class="p">({</span>
   <span class="na">scriptHash</span><span class="p">:</span> <span class="s1">'505663a29d83663a838eee091249abd167e928f5'</span><span class="p">,</span>
   <span class="na">operation</span><span class="p">:</span> <span class="s1">'storeData'</span><span class="p">,</span>
   <span class="na">arguments</span><span class="p">:</span> <span class="p">[</span>
@@ -922,11 +998,243 @@ invokeRead({
       <span class="k">break</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">});</span>
-</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="err">txid</span><span class="p">:</span><span class="w"> </span><span class="err">'ed</span><span class="mi">54</span><span class="err">fb</span><span class="mi">38</span><span class="err">dff</span><span class="mi">371</span><span class="err">be</span><span class="mi">6</span><span class="err">e</span><span class="mi">3</span><span class="err">f</span><span class="mi">96</span><span class="err">e</span><span class="mi">4880405758</span><span class="err">c</span><span class="mi">07</span><span class="err">fe</span><span class="mi">6</span><span class="err">dd</span><span class="mi">1295</span><span class="err">eb</span><span class="mi">136</span><span class="err">fe</span><span class="mi">15</span><span class="err">f</span><span class="mi">311</span><span class="err">e</span><span class="mi">9</span><span class="err">ff</span><span class="mi">77</span><span class="err">'</span><span class="p">,</span><span class="w">
-  </span><span class="err">nodeUrl</span><span class="p">:</span><span class="w"> </span><span class="err">'http</span><span class="p">:</span><span class="err">//seed</span><span class="mi">7</span><span class="err">.ngd.network</span><span class="p">:</span><span class="mi">10332</span><span class="err">'</span><span class="p">,</span><span class="w">
+</code></pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"txid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed54fb38dff371be6e3f96e4880405758c07fe6dd1295eb136fe15f311e9ff77"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"nodeUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://seed7.ngd.network:10332"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h1 id='events'>Events</h1><h2 id='event-changed'>Event Changed</h2><h1 id='errors'>Errors</h1>
+</span></code></pre>
+<p>Invoke allows for the generic execution of smart contracts on behalf of the user. It is reccommended to have a general understanding of the NEO blockchain, and to be able successfully use all other commands listed previously in this document before attempting a generic contract execution. </p>
+<h3 id='invoke-request'>Invoke Request</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>scriptHash</td>
+<td>String</td>
+<td>The script hash of the contract that you wish to invoke</td>
+</tr>
+<tr>
+<td>operation</td>
+<td>String</td>
+<td>The operation on the smart contract that you wish to call. This can be fetched from the contract ABI</td>
+</tr>
+<tr>
+<td>args</td>
+<td>[Argument]</td>
+<td>A list of arguments necessary to perform on the operation you wish to call</td>
+</tr>
+<tr>
+<td>fee</td>
+<td>String?</td>
+<td>If a fee is specified then the wallet SHOULD NOT override it, if a fee is not specified the wallet SHOULD allow the user to attach an optional fee</td>
+</tr>
+<tr>
+<td>network</td>
+<td>String?</td>
+<td>Network alias to submit this request to. If omitted, will default to &quot;MainNet&quot;.</td>
+</tr>
+<tr>
+<td>assets</td>
+<td>AttachedAssets?</td>
+<td>Describes the assets to attach with the smart contract, e.g. attaching assets to mint tokens during a token sale</td>
+</tr>
+<tr>
+<td>assetIntentOverrides</td>
+<td>AssetIntentOverrides</td>
+<td>Used to specify the exact the exact UTXO&#39;s to use for attached assets. If this is provided fee and attachedAssets will be ignored</td>
+</tr>
+<tr>
+<td>triggerContractVerification</td>
+<td>Boolean?</td>
+<td>Adds the instruction to invoke the contract verifican trigger</td>
+</tr>
+</tbody></table>
+<h3 id='argument'>Argument</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>The type of the argument with you are using</td>
+</tr>
+<tr>
+<td>value</td>
+<td>String</td>
+<td>String representation of the argument which you are using</td>
+</tr>
+</tbody></table>
+
+<aside class =notice>
+Available types are "String"|"Boolean"|"Hash160"|"Integer"|"ByteArray"|"Array"|"Address"  
+</aside>
+<h3 id='attachedassets'>AttachedAssets</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>NEO</td>
+<td>String?</td>
+<td>The amount of NEO to attach to the contract invocation</td>
+</tr>
+<tr>
+<td>GAS</td>
+<td>String?</td>
+<td>The amount of GAS to attach to the contract invocation</td>
+</tr>
+</tbody></table>
+<h3 id='assetintentoverrides'>AssetIntentOverrides</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>inputs</td>
+<td>[AssetInput]</td>
+<td>A list of UTXO inputs to use for this transaction</td>
+</tr>
+<tr>
+<td>outputs</td>
+<td>[AssetOutput]</td>
+<td>A list of UTXO outputs to use for this transaction</td>
+</tr>
+</tbody></table>
+<h3 id='assetinput'>AssetInput</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>txid</td>
+<td>String</td>
+<td>Transaction id to be used as input</td>
+</tr>
+<tr>
+<td>index</td>
+<td>String</td>
+<td>Index of the UTXO, can be found from transaction details</td>
+</tr>
+</tbody></table>
+<h3 id='assetoutput'>AssetOutput</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>asset</td>
+<td>String</td>
+<td>A list of UTXO inputs to use for this transaction</td>
+</tr>
+<tr>
+<td>address</td>
+<td>String</td>
+<td>A list of UTXO outputs to use for this transaction</td>
+</tr>
+<tr>
+<td>value</td>
+<td>String</td>
+<td>String representation of double or integer value to be used as output</td>
+</tr>
+</tbody></table>
+<h3 id='invoke-response'>Invoke Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>txid</td>
+<td>String</td>
+<td>The transaction id of the send request which can be queried on the blockchain</td>
+</tr>
+<tr>
+<td>nodeURL</td>
+<td>String</td>
+<td>The node to which the transaction was submitted to</td>
+</tr>
+</tbody></table>
+<h1 id='events'>Events</h1>
+<p>Events are a way for the wallet to asynchronously with the DAPP when certain changes occur to the state of the wallet that might be relevant for the</p>
+<h2 id='ready'>READY</h2>
+<p>On a READY event, the callback will fire with a single argument with information about the wallet provider. At any time a READY event listener is added, it will immidiately be called if the provider is already in a ready state. This provides a single flow for dapp developers since this listener should start any and all interactions with the dapi protocol.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>Name of the provider</td>
+</tr>
+<tr>
+<td>website</td>
+<td>String</td>
+<td>Website of the provider</td>
+</tr>
+<tr>
+<td>version</td>
+<td>String</td>
+<td>Version of the dAPI whih the provider supports</td>
+</tr>
+<tr>
+<td>compatibility</td>
+<td>[String]</td>
+<td>List of NEP&#39;s which the dAPI provider will support</td>
+</tr>
+</tbody></table>
+<h2 id='account_changed'>ACCOUNT_CHANGED</h2>
+<p>On a ACCOUNT_CHANGED event, the callback will fire with a single argument of the new account. In the case that the user logs out without providing a new account to connect, this will be null.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>String</td>
+<td>Address of the new account</td>
+</tr>
+<tr>
+<td>publicKey</td>
+<td>String</td>
+<td>Public Key of the new account</td>
+</tr>
+</tbody></table>
+<h1 id='errors'>Errors</h1>
 <p>The NEO dAPI will provide these basic errors. It is up to the wallet provider to provide additional information if they choose:</p>
 
 <table><thead>
