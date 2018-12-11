@@ -410,7 +410,6 @@ result  | String | The raw value located in contract storage
 
 ## invokeRead
 
-Execute a contract invocation in read-only mode.
 ```javascript
 invokeRead({
   scriptHash: '505663a29d83663a838eee091249abd167e928f5',
@@ -445,19 +444,44 @@ invokeRead({
 });
 ```
 
+> Example Response
+
 ```json
 {
-  script: '8h89fh398f42f.....89hf2894hf9834',
-  state: 'HALT, BREAK',
-  gas_consumed: '0.13',
-  stack: [
+  "script": "8h89fh398f42f.....89hf2894hf9834",
+  "state": "HALT, BREAK",
+  "gas_consumed": "0.13",
+  "stack": [
     {
-      type: 'Integer',
-      value: '1337'
+      "type": "Integer",
+      "value": "1337"
     }
   ]
 }
 ```
+
+Execute a contract invocation in read-only mode.
+
+### Invoke Read Request
+Parameter | Type |  Description
+--------- | ---- |-----------
+scriptHash  | String | The script hash of the contract you want to invoke a read on
+operation | String | The operation on the smart contract that you want to invoke a read on
+args | [Argument] | The input arguments necessary to perform this operation
+network | String? | Network alias to submit this request to. If omitted, will default to "MainNet"
+
+### Argument
+Parameter | Type |  Description
+--------- | ---- |-----------
+type | String | The type of the argument with you are using
+value | String | String representation of the argument which you are using
+
+### Invoke Read Response
+The wallet will return the direct response from the RPC node.
+
+<aside class =notice>
+Available types are "String"|"Boolean"|"Hash160"|"Integer"|"ByteArray"|"Array"|"Address"  
+</aside>
 
 # Write Methods
 
@@ -537,7 +561,7 @@ It is reccommended that the DAPP take appropriate levels of risk prevention when
 </aside>
 
 
-## invoke
+## Invoke
 ```javascript
 invoke({
   scriptHash: '505663a29d83663a838eee091249abd167e928f5',
