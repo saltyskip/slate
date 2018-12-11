@@ -262,7 +262,7 @@
                     <a href="#send" class="toc-h2 toc-link" data-title="send">send</a>
                   </li>
                   <li>
-                    <a href="#invoke" class="toc-h2 toc-link" data-title="invoke">invoke</a>
+                    <a href="#invoke" class="toc-h2 toc-link" data-title="Invoke">Invoke</a>
                   </li>
               </ul>
           </li>
@@ -800,53 +800,109 @@ The amount of addresses is n where n is the number of addresses specified in you
 <td>The raw value located in contract storage</td>
 </tr>
 </tbody></table>
-<h2 id='invokeread'>invokeRead</h2>
-<p>Execute a contract invocation in read-only mode.
-<code>javascript
-invokeRead({
-  scriptHash: &#39;505663a29d83663a838eee091249abd167e928f5&#39;,
-  operation: &#39;calculatorAdd&#39;,
-  arguments: [
-    {
-      type: &#39;integer&#39;,
-      value: 2
-    },
-    {
-      type: &#39;integer&#39;,
-      value: 10
-    }
-  ],
-  network: &#39;PrivNet&#39;
-})
-.then((result: Object) =&gt; {
-  console.log(&#39;Read invocation result: &#39; + JSON.stringigy(result));
-})
-.catch((err: string) =&gt; {
-  switch(err) {
-    case NO_PROVIDER:
-      console.log(&#39;No provider available.&#39;);
-      break;
-    case CONNECTION_REFUSED:
-      console.log(&#39;Connection dApp not connected. Please call the &quot;connect&quot; function.&#39;);
-      break;
-   case RPC_ERROR:
-    console.log(&#39;There was an error when broadcasting this transaction to the network.&#39;);
-    break;
-  }
-});
-</code></p>
+<h2 id='invokeread'>invokeRead</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">invokeRead</span><span class="p">({</span>
+  <span class="na">scriptHash</span><span class="p">:</span> <span class="s1">'505663a29d83663a838eee091249abd167e928f5'</span><span class="p">,</span>
+  <span class="na">operation</span><span class="p">:</span> <span class="s1">'calculatorAdd'</span><span class="p">,</span>
+  <span class="na">arguments</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">type</span><span class="p">:</span> <span class="s1">'integer'</span><span class="p">,</span>
+      <span class="na">value</span><span class="p">:</span> <span class="mi">2</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="na">type</span><span class="p">:</span> <span class="s1">'integer'</span><span class="p">,</span>
+      <span class="na">value</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="na">network</span><span class="p">:</span> <span class="s1">'PrivNet'</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">:</span> <span class="nb">Object</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Read invocation result: '</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringigy</span><span class="p">(</span><span class="nx">result</span><span class="p">));</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="na">err</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">NO_PROVIDER</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'No provider available.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="na">CONNECTION_REFUSED</span><span class="p">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Connection dApp not connected. Please call the "connect" function.'</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+   <span class="k">case</span> <span class="na">RPC_ERROR</span><span class="p">:</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'There was an error when broadcasting this transaction to the network.'</span><span class="p">);</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="err">script</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">8</span><span class="err">h</span><span class="mi">89</span><span class="err">fh</span><span class="mi">398</span><span class="err">f</span><span class="mi">42</span><span class="err">f.....</span><span class="mi">89</span><span class="err">hf</span><span class="mi">2894</span><span class="err">hf</span><span class="mi">9834</span><span class="err">'</span><span class="p">,</span><span class="w">
-  </span><span class="err">state</span><span class="p">:</span><span class="w"> </span><span class="err">'HALT</span><span class="p">,</span><span class="w"> </span><span class="err">BREAK'</span><span class="p">,</span><span class="w">
-  </span><span class="err">gas_consumed</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mf">0.13</span><span class="err">'</span><span class="p">,</span><span class="w">
-  </span><span class="err">stack</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"script"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8h89fh398f42f.....89hf2894hf9834"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HALT, BREAK"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"gas_consumed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.13"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stack"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="err">type</span><span class="p">:</span><span class="w"> </span><span class="err">'Integer'</span><span class="p">,</span><span class="w">
-      </span><span class="err">value</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">1337</span><span class="err">'</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Integer"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1337"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h1 id='write-methods'>Write Methods</h1>
+</span></code></pre>
+<p>Execute a contract invocation in read-only mode.</p>
+<h3 id='invoke-read-request'>Invoke Read Request</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>scriptHash</td>
+<td>String</td>
+<td>The script hash of the contract you want to invoke a read on</td>
+</tr>
+<tr>
+<td>operation</td>
+<td>String</td>
+<td>The operation on the smart contract that you want to invoke a read on</td>
+</tr>
+<tr>
+<td>args</td>
+<td>[Argument]</td>
+<td>The input arguments necessary to perform this operation</td>
+</tr>
+<tr>
+<td>network</td>
+<td>String?</td>
+<td>Network alias to submit this request to. If omitted, will default to &quot;MainNet&quot;</td>
+</tr>
+</tbody></table>
+<h3 id='argument'>Argument</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>The type of the argument with you are using</td>
+</tr>
+<tr>
+<td>value</td>
+<td>String</td>
+<td>String representation of the argument which you are using</td>
+</tr>
+</tbody></table>
+<h3 id='invoke-read-response'>Invoke Read Response</h3>
+<p>The wallet will return the direct response from the RPC node.</p>
+
+<aside class =notice>
+Available types are "String"|"Boolean"|"Hash160"|"Integer"|"ByteArray"|"Array"|"Address"  
+</aside>
+<h1 id='write-methods'>Write Methods</h1>
 <p>Write methods will alter the state on the blockchain on behalf of the user</p>
 <h2 id='send'>send</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">send</span><span class="p">({</span>
   <span class="na">fromAddress</span><span class="p">:</span> <span class="s1">'ATaWxfUAiBcQixNPq6TvKHEHPQum9bx79d'</span><span class="p">,</span>
@@ -961,7 +1017,7 @@ invokeRead({
 <aside class="warning">
 It is reccommended that the DAPP take appropriate levels of risk prevention when accepting transactions. The dapp can query the mempool of a known node to ensure that the transaction will indeed be broadcast on the network.
 </aside>
-<h2 id='invoke'>invoke</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">invoke</span><span class="p">({</span>
+<h2 id='invoke'>Invoke</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">invoke</span><span class="p">({</span>
   <span class="na">scriptHash</span><span class="p">:</span> <span class="s1">'505663a29d83663a838eee091249abd167e928f5'</span><span class="p">,</span>
   <span class="na">operation</span><span class="p">:</span> <span class="s1">'storeData'</span><span class="p">,</span>
   <span class="na">arguments</span><span class="p">:</span> <span class="p">[</span>
@@ -1057,7 +1113,7 @@ It is reccommended that the DAPP take appropriate levels of risk prevention when
 <td>Adds the instruction to invoke the contract verifican trigger</td>
 </tr>
 </tbody></table>
-<h3 id='argument'>Argument</h3>
+<h3 id='argument-2'>Argument</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
